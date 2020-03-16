@@ -1,3 +1,3 @@
 module github.com/wt-l00/monkeygo
 
-go 1.13
+go 1.14
