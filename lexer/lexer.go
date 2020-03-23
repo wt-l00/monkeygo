@@ -1,6 +1,8 @@
 package lexer
 
-import "github.com/wt-l00/monkeygo/token"
+import (
+	"github.com/wt-l00/monkeygo/token"
+)
 
 // Lexer consists input and position and readPosition and ch
 type Lexer struct {
