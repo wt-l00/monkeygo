@@ -60,6 +60,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.BANG, p.parsePrefixExpression)
 	p.registerPrefix(token.MINUS, p.parsePrefixExpression)
 	p.registerPrefix(token.IF, p.parseIfExpression)
+	p.registerPrefix(token.LPAREN, p.parseGroupedExpression)
 	p.registerPrefix(token.FUNCTION, p.parseFunctionLiteral)
 
 	p.infixParseFns = make(map[token.TokenType]infixParseFn)
@@ -277,6 +278,16 @@ func (p *Parser) parseBlockStatement() *ast.BlockStatement {
 	}
 
 	return block
+}
+
+func (p *Parser) parseGroupedExpression() ast.Expression {
+	p.nextToken()
+
+	exp := p.parseExpression(LOWEST)
+	if !p.expectPeek(token.RPAREN) {
+		return nil
+	}
+	return exp
 }
 
 func (p *Parser) parseFunctionLiteral() ast.Expression {
